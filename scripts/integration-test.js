@@ -5,16 +5,17 @@
  * 전체 시스템이 정상적으로 작동하는지 테스트합니다.
  */
 
-const BrowserController = require('../src/controllers/browser-controller');
-const IntelligentExtractor = require('../src/extractors/intelligent-extractor');
-const CrawlingManager = require('../src/crawlers/crawling-manager');
-const CheckoutAutomation = require('../src/checkout/checkout-automation');
-const A2ARouter = require('../src/controllers/a2a-router');
-const DialogAgent = require('../src/agents/dialog-agent');
-const ProductRecommendationAgent = require('../src/agents/product-recommendation-agent');
-const CartAgent = require('../src/agents/cart-agent');
-const PurchaseProcessAgent = require('../src/agents/purchase-process-agent');
-const Logger = require('../src/utils/log-utils');
+// NOTE: 경로가 잘못되어 통합 테스트가 실패하던 문제를 수정했습니다.
+const BrowserController = require('../scripts/controllers/browser-controller');
+const IntelligentExtractor = require('../scripts/extractors/intelligent-extractor');
+const CrawlingManager = require('../scripts/crawlers/crawling-manager');
+const CheckoutAutomation = require('../scripts/checkout/checkout-automation');
+const A2ARouter = require('../src/protocols/a2a-router');
+const DialogAgent = require('../src/agents/dialog/dialog-agent');
+const ProductRecommendationAgent = require('../src/agents/product-recommendation/product-recommendation-agent');
+const CartAgent = require('../src/agents/cart/cart-agent');
+const PurchaseProcessAgent = require('../src/agents/purchase-process/purchase-process-agent');
+const Logger = require('../scripts/utils/logger');
 const config = require('../config/default-config');
 const fs = require('fs');
 const path = require('path');
