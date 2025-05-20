@@ -41,11 +41,13 @@ class CartAgent extends A2ABaseAgent {
       const { userId } = message.payload;
       const cart = await this.sessionService.getCart(userId);
       await this.router.sendMessage({
+        messageId: `msg_${Date.now()}`,
         fromAgent: this.agentId,
         toAgent: 'dialogAgent',
         messageType: 'event',
-        intent: 'cartContents',
-        payload: { userId, cart }
+        intent: 'cartUpdateResult',
+        payload: { sessionId: userId, cart, action: 'view' },
+        timestamp: new Date().toISOString()
       });
       return cart;
     });
@@ -56,11 +58,13 @@ class CartAgent extends A2ABaseAgent {
       await this.sessionService.addToCart(userId, product, quantity);
       const cart = await this.sessionService.getCart(userId);
       await this.router.sendMessage({
+        messageId: `msg_${Date.now()}`,
         fromAgent: this.agentId,
         toAgent: 'dialogAgent',
         messageType: 'event',
-        intent: 'cartUpdated',
-        payload: { userId, cart, action: 'added', product }
+        intent: 'cartUpdateResult',
+        payload: { sessionId: userId, cart, action: 'added', product },
+        timestamp: new Date().toISOString()
       });
       return cart;
     });
@@ -71,11 +75,13 @@ class CartAgent extends A2ABaseAgent {
       await this.sessionService.updateCartItem(userId, productId, quantity);
       const cart = await this.sessionService.getCart(userId);
       await this.router.sendMessage({
+        messageId: `msg_${Date.now()}`,
         fromAgent: this.agentId,
         toAgent: 'dialogAgent',
         messageType: 'event',
-        intent: 'cartUpdated',
-        payload: { userId, cart, action: 'updated', productId }
+        intent: 'cartUpdateResult',
+        payload: { sessionId: userId, cart, action: 'updated', productId },
+        timestamp: new Date().toISOString()
       });
       return cart;
     });
@@ -86,11 +92,13 @@ class CartAgent extends A2ABaseAgent {
       await this.sessionService.removeFromCart(userId, productId);
       const cart = await this.sessionService.getCart(userId);
       await this.router.sendMessage({
+        messageId: `msg_${Date.now()}`,
         fromAgent: this.agentId,
         toAgent: 'dialogAgent',
         messageType: 'event',
-        intent: 'cartUpdated',
-        payload: { userId, cart, action: 'removed', productId }
+        intent: 'cartUpdateResult',
+        payload: { sessionId: userId, cart, action: 'removed', productId },
+        timestamp: new Date().toISOString()
       });
       return cart;
     });
@@ -101,11 +109,13 @@ class CartAgent extends A2ABaseAgent {
       await this.sessionService.clearCart(userId);
       const cart = await this.sessionService.getCart(userId);
       await this.router.sendMessage({
+        messageId: `msg_${Date.now()}`,
         fromAgent: this.agentId,
         toAgent: 'dialogAgent',
         messageType: 'event',
-        intent: 'cartUpdated',
-        payload: { userId, cart, action: 'cleared' }
+        intent: 'cartUpdateResult',
+        payload: { sessionId: userId, cart, action: 'cleared' },
+        timestamp: new Date().toISOString()
       });
       return cart;
     });
@@ -116,21 +126,25 @@ class CartAgent extends A2ABaseAgent {
       const cart = await this.sessionService.getCart(userId);
       if (!cart || cart.length === 0) {
         await this.router.sendMessage({
+          messageId: `msg_${Date.now()}`,
           fromAgent: this.agentId,
           toAgent: 'dialogAgent',
           messageType: 'event',
-          intent: 'cartEmpty',
-          payload: { userId }
+          intent: 'cartUpdateResult',
+          payload: { sessionId: userId, cart: [], action: 'empty' },
+          timestamp: new Date().toISOString()
         });
         return null;
       }
       const checkoutUrl = await this.generateCartCheckoutUrl(userId, cart);
       await this.router.sendMessage({
+        messageId: `msg_${Date.now()}`,
         fromAgent: this.agentId,
         toAgent: 'dialogAgent',
         messageType: 'event',
-        intent: 'cartCheckout',
-        payload: { userId, checkoutUrl }
+        intent: 'cartUpdateResult',
+        payload: { sessionId: userId, cart, action: 'checkout', checkoutUrl },
+        timestamp: new Date().toISOString()
       });
       return checkoutUrl;
     });
