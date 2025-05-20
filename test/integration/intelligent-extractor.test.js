@@ -1,8 +1,8 @@
 const { expect } = require('@jest/globals');
-const IntelligentExtractor = require('../../src/extractors/intelligent-extractor');
+const IntelligentExtractor = require('../../scripts/extractors/intelligent-extractor');
 const fs = require('fs');
 const path = require('path');
-const Logger = require('../../src/utils/log-utils');
+const Logger = require('../../scripts/utils/logger');
 const config = require('../../config/default-config');
 
 // 테스트 HTML 파일 경로
@@ -13,8 +13,9 @@ describe('지능형 컨텐츠 추출기 통합 테스트', () => {
   let htmlContent;
 
   beforeAll(() => {
+    const testConfig = config.test || {};
     // 로깅 레벨 설정
-    Logger.setLevel(config.test.logLevel || 'error');
+    Logger.setLevel(testConfig.logLevel || 'error');
     
     // HTML 샘플 파일이 존재하지 않는 경우 테스트 스킵
     if (!fs.existsSync(TEST_HTML_FILE)) {
@@ -29,7 +30,8 @@ describe('지능형 컨텐츠 추출기 통합 테스트', () => {
     extractor = new IntelligentExtractor({
       chunkSize: 3000,
       llmProvider: 'gemini-mock', // 테스트용 모의 LLM
-      maxParallelChunks: 4
+      maxParallelChunks: 4,
+      ...(testConfig.extractorOptions || {})
     });
   });
 

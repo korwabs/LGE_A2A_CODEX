@@ -1,5 +1,5 @@
-const { A2ABaseAgent } = require('@/protocols/a2a-base-agent');
-const { A2ARouter } = require('@/protocols/a2a-router');
+const A2ABaseAgent = require('@/protocols/a2a-base-agent');
+const A2ARouter = require('@/protocols/a2a-router');
 
 describe('A2ABaseAgent', () => {
   let router;

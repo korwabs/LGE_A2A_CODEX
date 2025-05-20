@@ -1,4 +1,4 @@
-const { DialogAgent } = require('@/agents/dialog/dialog-agent');
+const DialogAgent = require('@/agents/dialog/dialog-agent');
 
 describe('DialogAgent', () => {
   let dialogAgent;

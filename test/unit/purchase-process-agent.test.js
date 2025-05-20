@@ -1,4 +1,4 @@
-const { PurchaseProcessAgent } = require('@/agents/purchase-process/purchase-process-agent');
+const PurchaseProcessAgent = require('@/agents/purchase-process/purchase-process-agent');
 
 describe('PurchaseProcessAgent', () => {
   let purchaseAgent;

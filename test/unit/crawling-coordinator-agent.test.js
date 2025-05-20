@@ -1,4 +1,4 @@
-const { CrawlingCoordinatorAgent } = require('@/agents/crawling-coordinator/crawling-coordinator-agent');
+const CrawlingCoordinatorAgent = require('@/agents/crawling-coordinator/crawling-coordinator-agent');
 
 describe('CrawlingCoordinatorAgent', () => {
   let crawlingAgent;

@@ -1,7 +1,7 @@
 const { expect } = require('@jest/globals');
-const CheckoutAutomation = require('../../src/checkout/checkout-automation');
-const BrowserController = require('../../src/controllers/browser-controller');
-const Logger = require('../../src/utils/log-utils');
+const CheckoutAutomation = require('../../scripts/checkout/checkout-automation');
+const BrowserController = require('../../scripts/controllers/browser-controller');
+const Logger = require('../../scripts/utils/logger');
 const config = require('../../config/default-config');
 
 // 테스트 설정
@@ -27,19 +27,20 @@ describe('체크아웃 자동화 통합 테스트', () => {
   let checkoutProcess;
 
   beforeAll(async () => {
+    const testConfig = config.test || {};
     // 로깅 레벨 설정
-    Logger.setLevel(config.test.logLevel || 'error');
-    
+    Logger.setLevel(testConfig.logLevel || 'error');
+
     // 브라우저 컨트롤러 및 체크아웃 자동화 인스턴스 생성
     browserController = new BrowserController({
       headless: true,
-      ...config.test.browserOptions
+      ...(testConfig.browserOptions || {})
     });
-    
+
     checkoutAutomation = new CheckoutAutomation({
       browserController,
-      dataDir: config.test.tempDataDir,
-      ...config.test.checkoutOptions
+      dataDir: testConfig.tempDataDir,
+      ...(testConfig.checkoutOptions || {})
     });
   }, 30000);
 
