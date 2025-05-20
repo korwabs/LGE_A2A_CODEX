@@ -1,0 +1,14 @@
+{
+  "id": "TV002",
+  "name": "LG NanoCell 55인치 4K Smart TV",
+  "description": "생생한 색감과 선명한 해상도의 NanoCell 기술 적용 TV",
+  "price": 5499.99,
+  "category": "TV",
+  "imageUrl": "https://example.com/images/tv002.jpg",
+  "stockStatus": "In Stock",
+  "features": ["4K UHD", "NanoCell Technology", "WebOS", "AI ThinQ"],
+  "rating": 4.6,
+  "reviewCount": 85,
+  "url": "https://www.lge.com/br/tv/lg-55nano80",
+  "dateAdded": "2025-05-19T00:00:00Z"
+}

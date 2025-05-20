@@ -1,0 +1,55 @@
+{
+  "id": "TV-OLED-65-C2",
+  "name": "Smart TV OLED LG 65\" 4K UHD 65C2 - Autofalantes virtuais, Dolby Atmos e processador α9 Gen5 AI 4K",
+  "model": "OLED65C2PSA",
+  "category": "tv",
+  "subCategory": "oled-tv",
+  "url": "https://www.lge.com/br/tvs/lg-OLED65C2PSA",
+  "imageUrl": "https://www.lg.com/br/images/tvs/md07529285/gallery/medium01.jpg",
+  "price": 12999.00,
+  "stockStatus": "in-stock",
+  "availability": true,
+  "description": "Smart TV OLED LG 65" 4K UHD 65C2 com autofalantes virtuais, Dolby Atmos, processador α9 Gen5 AI 4K, compatível com Google Assistente e Alexa",
+  "features": [
+    "Tela OLED 4K de 65 polegadas",
+    "Processador α9 (Alpha9) Gen5 AI",
+    "Dolby Vision IQ e Dolby Atmos",
+    "ThinQ AI & WebOS 22",
+    "4 entradas HDMI 2.1 (4K@120Hz)",
+    "Modo Filmmaker",
+    "Compatível com Google Assistente e Alexa",
+    "HDR10 Pro e HLG"
+  ],
+  "specifications": {
+    "screenSize": "65 polegadas",
+    "resolution": "3840x2160 (4K UHD)",
+    "hdr": ["Dolby Vision", "HDR10", "HLG"],
+    "refreshRate": "120Hz",
+    "smartPlatform": "webOS 22",
+    "connectivity": ["Bluetooth", "Wi-Fi", "HDMI", "USB", "Ethernet"],
+    "dimensions": {
+      "withStand": {
+        "width": "1441 mm",
+        "height": "883 mm",
+        "depth": "251 mm"
+      },
+      "withoutStand": {
+        "width": "1441 mm",
+        "height": "830 mm",
+        "depth": "41.1 mm"
+      }
+    },
+    "weight": {
+      "withStand": "23.1 kg",
+      "withoutStand": "17.4 kg"
+    },
+    "energyConsumption": "206 kWh/ano"
+  },
+  "reviews": {
+    "averageRating": 4.8,
+    "totalReviews": 452,
+    "summary": "Os clientes destacam a qualidade de imagem excepcional, cores vibrantes e o contraste infinito da tecnologia OLED. O design fino e elegante também recebe muitos elogios, assim como o sistema operacional webOS de fácil utilização. Alguns usuários mencionam que o preço é elevado, porém justificável pela qualidade do produto."
+  },
+  "relatedProducts": ["TV-OLED-55-C2", "TV-OLED-77-C2", "TV-OLED-55-G2"],
+  "lastUpdated": "2025-05-19T10:30:00Z"
+}

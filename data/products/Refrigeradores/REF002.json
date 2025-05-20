@@ -1,0 +1,14 @@
+{
+  "id": "REF002",
+  "name": "LG French Door 냉장고",
+  "description": "넓은 수납공간과 고급스러운 디자인의 프렌치 도어 냉장고",
+  "price": 7899.99,
+  "category": "Refrigeradores",
+  "imageUrl": "https://example.com/images/ref002.jpg",
+  "stockStatus": "In Stock",
+  "features": ["French Door", "Linear Cooling", "Inverter Compressor"],
+  "rating": 4.7,
+  "reviewCount": 92,
+  "url": "https://www.lge.com/br/refrigeradores/lg-lfxs26596s",
+  "dateAdded": "2025-05-19T00:00:00Z"
+}

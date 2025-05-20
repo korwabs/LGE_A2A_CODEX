@@ -1,0 +1,72 @@
+[
+  {
+    "id": "TV001",
+    "name": "LG OLED C2 65인치 4K TV",
+    "description": "뛰어난 화질과 성능을 갖춘 프리미엄 OLED TV",
+    "price": 8999.99,
+    "category": "TV",
+    "imageUrl": "https://example.com/images/tv001.jpg",
+    "stockStatus": "In Stock",
+    "features": ["4K UHD", "Dolby Vision", "WebOS", "HDMI 2.1"],
+    "rating": 4.8,
+    "reviewCount": 120,
+    "url": "https://www.lge.com/br/tv/lg-oled65c2",
+    "dateAdded": "2025-05-19T00:00:00Z"
+  },
+  {
+    "id": "TV002",
+    "name": "LG NanoCell 55인치 4K Smart TV",
+    "description": "생생한 색감과 선명한 해상도의 NanoCell 기술 적용 TV",
+    "price": 5499.99,
+    "category": "TV",
+    "imageUrl": "https://example.com/images/tv002.jpg",
+    "stockStatus": "In Stock",
+    "features": ["4K UHD", "NanoCell Technology", "WebOS", "AI ThinQ"],
+    "rating": 4.6,
+    "reviewCount": 85,
+    "url": "https://www.lge.com/br/tv/lg-55nano80",
+    "dateAdded": "2025-05-19T00:00:00Z"
+  },
+  {
+    "id": "TV003",
+    "name": "LG UHD 50인치 4K TV",
+    "description": "가성비 뛰어난 4K UHD TV",
+    "price": 3499.99,
+    "category": "TV",
+    "imageUrl": "https://example.com/images/tv003.jpg",
+    "stockStatus": "In Stock",
+    "features": ["4K UHD", "HDR", "WebOS", "Virtual Surround Sound"],
+    "rating": 4.4,
+    "reviewCount": 112,
+    "url": "https://www.lge.com/br/tv/lg-50un7300",
+    "dateAdded": "2025-05-19T00:00:00Z"
+  },
+  {
+    "id": "REF001",
+    "name": "LG InstaView 냉장고",
+    "description": "스마트하고 에너지 효율적인 냉장고",
+    "price": 6599.99,
+    "category": "Refrigeradores",
+    "imageUrl": "https://example.com/images/ref001.jpg",
+    "stockStatus": "In Stock",
+    "features": ["InstaView Door", "Smart Cooling", "WiFi 연결"],
+    "rating": 4.6,
+    "reviewCount": 85,
+    "url": "https://www.lge.com/br/refrigeradores/lg-lsfxc2596s",
+    "dateAdded": "2025-05-19T00:00:00Z"
+  },
+  {
+    "id": "REF002",
+    "name": "LG French Door 냉장고",
+    "description": "넓은 수납공간과 고급스러운 디자인의 프렌치 도어 냉장고",
+    "price": 7899.99,
+    "category": "Refrigeradores",
+    "imageUrl": "https://example.com/images/ref002.jpg",
+    "stockStatus": "In Stock",
+    "features": ["French Door", "Linear Cooling", "Inverter Compressor"],
+    "rating": 4.7,
+    "reviewCount": 92,
+    "url": "https://www.lge.com/br/refrigeradores/lg-lfxs26596s",
+    "dateAdded": "2025-05-19T00:00:00Z"
+  }
+]

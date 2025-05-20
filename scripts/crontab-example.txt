@@ -1,0 +1,29 @@
+**
+ * LG A2A 쇼핑 어시스턴트 crontab 예제
+ * 정기적인 크롤링 및 업데이트 작업을 위한 crontab 설정 예제
+ *
+ * crontab -e 명령어로 사용자의 crontab을 열고 아래 내용을 추가하세요.
+ */
+
+# 환경 변수 설정
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin
+NODE_ENV=production
+
+# 크롤링 작업 로그 디렉토리
+LOGS_DIR=/path/to/LGE_A2A/logs
+
+# 매일 새벽 3시에 카테고리 새로 발견
+0 3 * * * cd /path/to/LGE_A2A && node scripts/discover-categories.js >> $LOGS_DIR/cron-categories.log 2>&1
+
+# 매주 월요일 새벽 4시에 전체 크롤링 실행
+0 4 * * 1 cd /path/to/LGE_A2A && node scripts/crawl.js >> $LOGS_DIR/cron-crawl.log 2>&1
+
+# 매일 새벽 2시에 제품 정보 업데이트 (가격, 재고 등)
+0 2 * * * cd /path/to/LGE_A2A && node scripts/update-products.js >> $LOGS_DIR/cron-update.log 2>&1
+
+# 매시간 제품 정보 일부 업데이트 (우선순위 제품)
+0 * * * * cd /path/to/LGE_A2A && node scripts/update-products.js --limit=10 >> $LOGS_DIR/cron-hourly-update.log 2>&1
+
+# 매월 1일 새벽 1시에 통합 크롤링 워크플로우 실행
+0 1 1 * * cd /path/to/LGE_A2A && node scripts/crawl.js --force >> $LOGS_DIR/cron-monthly-crawl.log 2>&1

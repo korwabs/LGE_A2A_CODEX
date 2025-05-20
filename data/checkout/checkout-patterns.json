@@ -1,0 +1,108 @@
+{
+  "sitePatterns": {
+    "checkoutFlow": [
+      {
+        "step": "cart",
+        "url": "https://www.lge.com/br/carrinho",
+        "elements": {
+          "addToCartButton": ".add-to-cart-btn",
+          "cartIcon": ".cart-icon",
+          "checkoutButton": ".checkout-btn",
+          "quantitySelector": ".quantity-selector"
+        },
+        "required": false
+      },
+      {
+        "step": "login",
+        "url": "https://www.lge.com/br/login",
+        "elements": {
+          "emailInput": "#email",
+          "passwordInput": "#password",
+          "loginButton": ".login-btn",
+          "guestCheckoutButton": ".guest-checkout-btn",
+          "createAccountLink": ".create-account-link"
+        },
+        "required": true,
+        "skipOptions": ["guestCheckoutButton"]
+      },
+      {
+        "step": "shipping",
+        "url": "https://www.lge.com/br/checkout/shipping",
+        "elements": {
+          "nameInput": "#fullName",
+          "addressInput": "#address",
+          "cityInput": "#city",
+          "stateSelect": "#state",
+          "zipCodeInput": "#zipCode",
+          "phoneInput": "#phone",
+          "continueButton": ".continue-btn"
+        },
+        "required": true,
+        "requiredFields": ["nameInput", "addressInput", "cityInput", "stateSelect", "zipCodeInput", "phoneInput"]
+      },
+      {
+        "step": "payment",
+        "url": "https://www.lge.com/br/checkout/payment",
+        "elements": {
+          "creditCardRadio": "#credit-card-radio",
+          "boletoBancarioRadio": "#boleto-bancario-radio",
+          "pixRadio": "#pix-radio",
+          "cardNumberInput": "#cardNumber",
+          "cardHolderInput": "#cardHolder",
+          "expiryDateInput": "#expiryDate",
+          "cvvInput": "#cvv",
+          "installmentsSelect": "#installments",
+          "continueButton": ".continue-btn"
+        },
+        "required": true,
+        "conditionalFields": {
+          "creditCardRadio": ["cardNumberInput", "cardHolderInput", "expiryDateInput", "cvvInput", "installmentsSelect"],
+          "boletoBancarioRadio": [],
+          "pixRadio": []
+        }
+      },
+      {
+        "step": "review",
+        "url": "https://www.lge.com/br/checkout/review",
+        "elements": {
+          "termsCheckbox": "#terms-checkbox",
+          "placeOrderButton": ".place-order-btn"
+        },
+        "required": true,
+        "requiredFields": ["termsCheckbox"]
+      },
+      {
+        "step": "confirmation",
+        "url": "https://www.lge.com/br/checkout/confirmation",
+        "elements": {
+          "orderNumberText": ".order-number",
+          "printReceiptButton": ".print-receipt-btn",
+          "continueShoppingButton": ".continue-shopping-btn"
+        },
+        "required": false
+      }
+    ]
+  },
+  "stateOptions": [
+    "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", 
+    "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", 
+    "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", 
+    "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", 
+    "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"
+  ],
+  "installmentOptions": [
+    {"value": "1", "text": "1x sem juros"},
+    {"value": "2", "text": "2x sem juros"},
+    {"value": "3", "text": "3x sem juros"},
+    {"value": "4", "text": "4x sem juros"},
+    {"value": "5", "text": "5x sem juros"},
+    {"value": "6", "text": "6x sem juros"},
+    {"value": "7", "text": "7x sem juros"},
+    {"value": "8", "text": "8x sem juros"},
+    {"value": "9", "text": "9x sem juros"},
+    {"value": "10", "text": "10x sem juros"},
+    {"value": "11", "text": "11x sem juros"},
+    {"value": "12", "text": "12x sem juros"}
+  ],
+  "lastUpdated": "2025-05-19T14:25:00Z"
+}

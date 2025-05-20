@@ -1,0 +1,48 @@
+{
+  "id": "REF-FRENCHDOOR-GC-X257",
+  "name": "Geladeira LG French Door InstaView Door-in-Door GC-X257",
+  "model": "GC-X257CQES",
+  "category": "refrigerator",
+  "subCategory": "french-door",
+  "url": "https://www.lge.com/br/refrigeradores/lg-GC-X257CQES",
+  "imageUrl": "https://www.lg.com/br/images/refrigeradores/md07529285/gallery/medium01.jpg",
+  "price": 16999.00,
+  "stockStatus": "in-stock",
+  "availability": true,
+  "description": "Geladeira LG French Door InstaView Door-in-Door GC-X257 com painel de vidro transparente, dispenser de água e gelo, e compressor Linear Inverter.",
+  "features": [
+    "InstaView Door-in-Door (bater duas vezes para ver o interior)",
+    "Capacidade de 570 litros",
+    "Compressor Linear Inverter com 10 anos de garantia",
+    "Dispenser de água e gelo na porta",
+    "Fresh Balancer (controle de umidade)",
+    "Fresh Converter (controle de temperatura)",
+    "Smart Diagnosis",
+    "DoorCooling+ (resfriamento uniforme)"
+  ],
+  "specifications": {
+    "capacity": {
+      "total": "570 litros",
+      "refrigerator": "385 litros",
+      "freezer": "185 litros"
+    },
+    "energyEfficiency": "Classe A",
+    "technology": "Inverter",
+    "frostFree": true,
+    "dimensions": {
+      "width": "912 mm",
+      "height": "1790 mm",
+      "depth": "738 mm"
+    },
+    "weight": "145 kg",
+    "voltage": "127V ou 220V",
+    "color": "Inox"
+  },
+  "reviews": {
+    "averageRating": 4.7,
+    "totalReviews": 215,
+    "summary": "Os consumidores destacam o design sofisticado, a funcionalidade InstaView que permite ver o interior sem abrir a porta e a economia de energia proporcionada pelo compressor Linear Inverter. O espaço interno generoso e a organização inteligente dos compartimentos também são muito elogiados. Alguns usuários mencionam o preço elevado como ponto negativo."
+  },
+  "relatedProducts": ["REF-SIDEBYSIDE-GS-X268", "REF-FRENCHDOOR-GR-X228", "REF-BOTTOMFREEZER-GC-B55"],
+  "lastUpdated": "2025-05-19T09:45:00Z"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "TV001",
+  "name": "LG OLED C2 65인치 4K TV",
+  "description": "뛰어난 화질과 성능을 갖춘 프리미엄 OLED TV",
+  "price": 8999.99,
+  "category": "TV",
+  "imageUrl": "https://example.com/images/tv001.jpg",
+  "stockStatus": "In Stock",
+  "features": ["4K UHD", "Dolby Vision", "WebOS", "HDMI 2.1"],
+  "rating": 4.8,
+  "reviewCount": 120,
+  "url": "https://www.lge.com/br/tv/lg-oled65c2",
+  "dateAdded": "2025-05-19T00:00:00Z"
+}

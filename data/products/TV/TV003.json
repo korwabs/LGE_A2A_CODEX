@@ -1,0 +1,14 @@
+{
+  "id": "TV003",
+  "name": "LG UHD 50인치 4K TV",
+  "description": "가성비 뛰어난 4K UHD TV",
+  "price": 3499.99,
+  "category": "TV",
+  "imageUrl": "https://example.com/images/tv003.jpg",
+  "stockStatus": "In Stock",
+  "features": ["4K UHD", "HDR", "WebOS", "Virtual Surround Sound"],
+  "rating": 4.4,
+  "reviewCount": 112,
+  "url": "https://www.lge.com/br/tv/lg-50un7300",
+  "dateAdded": "2025-05-19T00:00:00Z"
+}

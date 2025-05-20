@@ -1,0 +1,44 @@
+[
+  {
+    "name": "TV",
+    "url": "https://www.lge.com/br/tv",
+    "id": "tv",
+    "priority": "high"
+  },
+  {
+    "name": "Refrigeradores",
+    "url": "https://www.lge.com/br/refrigeradores",
+    "id": "refrigeradores",
+    "priority": "high"
+  },
+  {
+    "name": "Ar-Condicionado",
+    "url": "https://www.lge.com/br/ar-condicionado",
+    "id": "ar-condicionado",
+    "priority": "high"
+  },
+  {
+    "name": "Lavadoras",
+    "url": "https://www.lge.com/br/lavadoras-de-roupas",
+    "id": "lavadoras-de-roupas",
+    "priority": "medium"
+  },
+  {
+    "name": "Celulares",
+    "url": "https://www.lge.com/br/celulares",
+    "id": "celulares",
+    "priority": "medium"
+  },
+  {
+    "name": "Monitores",
+    "url": "https://www.lge.com/br/monitores",
+    "id": "monitores",
+    "priority": "medium"
+  },
+  {
+    "name": "Promoções",
+    "url": "https://www.lge.com/br/promocoes",
+    "id": "promocoes",
+    "priority": "low"
+  }
+]

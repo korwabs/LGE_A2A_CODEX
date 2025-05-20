@@ -1,0 +1,105 @@
+{
+  "categories": [
+    {
+      "id": "tv",
+      "name": "Televisores",
+      "url": "https://www.lge.com/br/tv",
+      "subCategories": [
+        {
+          "id": "oled-tv",
+          "name": "Smart TV OLED",
+          "url": "https://www.lge.com/br/tv/lg-oled-tv"
+        },
+        {
+          "id": "nanocell-tv",
+          "name": "Smart TV NanoCell",
+          "url": "https://www.lge.com/br/tv/lg-nanocell-tv"
+        },
+        {
+          "id": "uhd-tv",
+          "name": "Smart TV UHD 4K",
+          "url": "https://www.lge.com/br/tv/lg-uhd-tv"
+        }
+      ]
+    },
+    {
+      "id": "refrigerator",
+      "name": "Geladeiras",
+      "url": "https://www.lge.com/br/refrigeradores",
+      "subCategories": [
+        {
+          "id": "french-door",
+          "name": "French Door",
+          "url": "https://www.lge.com/br/refrigeradores/lg-french-door"
+        },
+        {
+          "id": "side-by-side",
+          "name": "Side by Side",
+          "url": "https://www.lge.com/br/refrigeradores/lg-side-by-side"
+        },
+        {
+          "id": "bottom-freezer",
+          "name": "Bottom Freezer",
+          "url": "https://www.lge.com/br/refrigeradores/lg-bottom-freezer"
+        }
+      ]
+    },
+    {
+      "id": "washing-machine",
+      "name": "Lavadoras",
+      "url": "https://www.lge.com/br/lavadoras",
+      "subCategories": [
+        {
+          "id": "front-load",
+          "name": "Lava e Seca",
+          "url": "https://www.lge.com/br/lavadoras/lg-lava-e-seca"
+        },
+        {
+          "id": "top-load",
+          "name": "Lavadora de Roupas",
+          "url": "https://www.lge.com/br/lavadoras/lg-lavadora-de-roupas"
+        }
+      ]
+    },
+    {
+      "id": "air-conditioner",
+      "name": "Ar Condicionado",
+      "url": "https://www.lge.com/br/ar-condicionado",
+      "subCategories": [
+        {
+          "id": "split",
+          "name": "Split",
+          "url": "https://www.lge.com/br/ar-condicionado/lg-split"
+        },
+        {
+          "id": "window",
+          "name": "Janela",
+          "url": "https://www.lge.com/br/ar-condicionado/lg-janela"
+        },
+        {
+          "id": "portable",
+          "name": "Portátil",
+          "url": "https://www.lge.com/br/ar-condicionado/lg-portatil"
+        }
+      ]
+    },
+    {
+      "id": "smartphone",
+      "name": "Smartphones",
+      "url": "https://www.lge.com/br/smartphones",
+      "subCategories": [
+        {
+          "id": "premium",
+          "name": "Premium",
+          "url": "https://www.lge.com/br/smartphones/lg-premium"
+        },
+        {
+          "id": "intermediary",
+          "name": "Intermediário",
+          "url": "https://www.lge.com/br/smartphones/lg-intermediario"
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2025-05-19T12:00:00Z"
+}

@@ -1,0 +1,222 @@
+/* public/css/shopping-assistant.css - 쇼핑 어시스턴트 스타일 */
+
+/* 런처 스타일 */
+.lg-shopping-assistant-launcher {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 180px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: #a50034; /* LG 브랜드 색상 */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.lg-shopping-assistant-launcher:hover {
+  background-color: #8e002c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.lg-launcher-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+
+.lg-launcher-label {
+  font-family: 'LG Smart', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* 제품 추천 카드 스타일 */
+.lg-product-card {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 12px;
+  background: white;
+}
+
+.lg-product-image {
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  background: #f5f5f5;
+}
+
+.lg-product-info {
+  padding: 12px;
+}
+
+.lg-product-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #333;
+}
+
+.lg-product-price {
+  color: #a50034;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.lg-product-features {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.lg-product-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.lg-product-button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.lg-product-details {
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+}
+
+.lg-product-add-to-cart {
+  background-color: #a50034;
+  color: white;
+  border: none;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .lg-shopping-assistant-launcher {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+  
+  .lg-launcher-label {
+    display: none;
+  }
+  
+  .lg-launcher-icon {
+    margin-right: 0;
+  }
+}
+
+/* Intercom 커스터마이징 */
+.intercom-messenger-frame {
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+/* 장바구니 요약 스타일 */
+.lg-cart-summary {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.lg-cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.lg-cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.lg-cart-item-name {
+  flex: 2;
+}
+
+.lg-cart-item-quantity {
+  flex: 1;
+  text-align: center;
+}
+
+.lg-cart-item-price {
+  flex: 1;
+  text-align: right;
+}
+
+.lg-cart-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e0e0e0;
+  font-weight: 600;
+}
+
+.lg-cart-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.lg-cart-checkout {
+  background-color: #a50034;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 툴팁 스타일 */
+.lg-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.lg-tooltip .lg-tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1001;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.lg-tooltip:hover .lg-tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

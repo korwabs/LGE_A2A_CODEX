@@ -1,0 +1,58 @@
+{
+  "id": "AC-SPLIT-12000-DUALINVERTER",
+  "name": "Ar Condicionado Split LG DUAL Inverter Voice 12.000 BTUs Frio",
+  "model": "S4-Q12JA31C",
+  "category": "air-conditioner",
+  "subCategory": "split",
+  "url": "https://www.lge.com/br/ar-condicionado/lg-S4-Q12JA31C",
+  "imageUrl": "https://www.lg.com/br/images/ar-condicionado/md07529285/gallery/medium01.jpg",
+  "price": 2799.00,
+  "stockStatus": "in-stock",
+  "availability": true,
+  "description": "Ar Condicionado Split LG DUAL Inverter Voice com 12.000 BTUs, controle por voz, função de limpeza automática e tecnologia de economia de energia.",
+  "features": [
+    "Tecnologia DUAL Inverter",
+    "12.000 BTUs",
+    "Controle por voz (ThinQ AI)",
+    "Filtro 3M Multi Proteção",
+    "Função de limpeza automática",
+    "Modo Energy Saving",
+    "Baixo nível de ruído (19dB)",
+    "Gás ecológico R410A"
+  ],
+  "specifications": {
+    "capacity": "12.000 BTUs",
+    "energyEfficiency": "Classe A",
+    "mode": "Frio",
+    "technology": "Inverter",
+    "noiseLevel": {
+      "indoor": "19 dB",
+      "outdoor": "45 dB"
+    },
+    "powerConsumption": "1096 W",
+    "dimensions": {
+      "indoor": {
+        "width": "837 mm",
+        "height": "308 mm",
+        "depth": "189 mm"
+      },
+      "outdoor": {
+        "width": "717 mm",
+        "height": "483 mm",
+        "depth": "230 mm"
+      }
+    },
+    "weight": {
+      "indoor": "8.5 kg",
+      "outdoor": "24.0 kg"
+    },
+    "voltage": "220V"
+  },
+  "reviews": {
+    "averageRating": 4.6,
+    "totalReviews": 328,
+    "summary": "Os consumidores destacam a economia de energia proporcionada pela tecnologia DUAL Inverter e o baixo nível de ruído. O controle por voz e a conectividade com o aplicativo ThinQ também são muito elogiados. Alguns usuários mencionam que a instalação pode ser complexa e exige profissionais especializados."
+  },
+  "relatedProducts": ["AC-SPLIT-9000-DUALINVERTER", "AC-SPLIT-18000-DUALINVERTER", "AC-SPLIT-24000-DUALINVERTER"],
+  "lastUpdated": "2025-05-19T11:15:00Z"
+}

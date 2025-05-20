@@ -1,0 +1,91 @@
+{
+  "timestamp": "2025-05-19T08:48:21.957Z",
+  "checkoutUrl": "https://www.lge.com/br/checkout",
+  "checkoutProcess": {
+    "currentUrl": "https://www.lge.com/br/checkout/customer-info",
+    "pageTitle": "LG 체크아웃 - 고객 정보",
+    "steps": [
+      {
+        "name": "Customer Info",
+        "isActive": true
+      },
+      {
+        "name": "Shipping",
+        "isActive": false
+      },
+      {
+        "name": "Payment",
+        "isActive": false
+      },
+      {
+        "name": "Review",
+        "isActive": false
+      }
+    ],
+    "formFields": [
+      {
+        "name": "firstName",
+        "id": "firstName",
+        "type": "text",
+        "required": true,
+        "label": "First Name"
+      },
+      {
+        "name": "lastName",
+        "id": "lastName",
+        "type": "text",
+        "required": true,
+        "label": "Last Name"
+      },
+      {
+        "name": "email",
+        "id": "email",
+        "type": "email",
+        "required": true,
+        "label": "Email"
+      },
+      {
+        "name": "phone",
+        "id": "phone",
+        "type": "tel",
+        "required": true,
+        "label": "Phone Number"
+      },
+      {
+        "name": "address",
+        "id": "address",
+        "type": "text",
+        "required": true,
+        "label": "Address"
+      },
+      {
+        "name": "city",
+        "id": "city",
+        "type": "text",
+        "required": true,
+        "label": "City"
+      },
+      {
+        "name": "state",
+        "id": "state",
+        "type": "select",
+        "required": true,
+        "label": "State"
+      },
+      {
+        "name": "zipCode",
+        "id": "zipCode",
+        "type": "text",
+        "required": true,
+        "label": "Zip Code"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Continue",
+        "type": "submit",
+        "isSubmit": true
+      }
+    ]
+  }
+}

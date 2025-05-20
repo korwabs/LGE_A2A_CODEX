@@ -1,0 +1,45 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://www.lge.com"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    }
+  ],
+  "env": {
+    "ALGOLIA_APP_ID": "@algolia-app-id",
+    "ALGOLIA_API_KEY": "@algolia-api-key",
+    "ALGOLIA_PRODUCTS_INDEX": "lg_brazil_products",
+    "APIFY_API_TOKEN": "@apify-api-token",
+    "FIREBASE_DATABASE_URL": "@firebase-database-url",
+    "FIREBASE_SERVICE_ACCOUNT": "@firebase-service-account",
+    "GOOGLE_CLOUD_PROJECT": "@google-cloud-project",
+    "GOOGLE_CLOUD_LOCATION": "us-central1",
+    "WEBHOOK_SECRET_KEY": "@webhook-secret-key",
+    "CRAWL_API_KEY": "@crawl-api-key"
+  },
+  "build": {
+    "env": {
+      "ALGOLIA_APP_ID": "@algolia-app-id",
+      "ALGOLIA_API_KEY": "@algolia-api-key"
+    }
+  }
+}
