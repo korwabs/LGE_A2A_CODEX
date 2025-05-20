@@ -1,4 +1,4 @@
-const { ProductRecommendationAgent } = require('@/agents/product-recommendation/product-recommendation-agent');
+const ProductRecommendationAgent = require('@/agents/product-recommendation/product-recommendation-agent');
 
 describe('ProductRecommendationAgent', () => {
   let recommendationAgent;

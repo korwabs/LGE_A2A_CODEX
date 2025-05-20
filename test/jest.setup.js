@@ -1,6 +1,13 @@
 // Jest 셋업 파일
 import '@testing-library/jest-dom';
 
+// Node.js 환경에서 TextEncoder/TextDecoder가 존재하지 않는 경우를 위한 폴리필
+if (typeof global.TextEncoder === 'undefined') {
+  const { TextEncoder, TextDecoder } = require('util');
+  global.TextEncoder = TextEncoder;
+  global.TextDecoder = TextDecoder;
+}
+
 // 전역 설정
 global.beforeEach(() => {
   // 테스트 전 환경 변수 초기화 등의 작업

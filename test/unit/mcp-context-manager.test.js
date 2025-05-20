@@ -1,4 +1,4 @@
-const { MCPContextManager } = require('@/protocols/mcp-context-manager');
+const MCPContextManager = require('@/protocols/mcp-context-manager');
 
 describe('MCPContextManager', () => {
   let contextManager;

@@ -1,4 +1,4 @@
-const { CartAgent } = require('@/agents/cart/cart-agent');
+const CartAgent = require('@/agents/cart/cart-agent');
 
 describe('CartAgent', () => {
   let cartAgent;

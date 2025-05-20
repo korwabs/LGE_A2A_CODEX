@@ -1,4 +1,4 @@
-const { A2ARouter } = require('@/protocols/a2a-router');
+const A2ARouter = require('@/protocols/a2a-router');
 
 describe('A2ARouter', () => {
   let router;

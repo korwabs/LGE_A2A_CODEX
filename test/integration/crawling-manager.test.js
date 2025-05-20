@@ -1,9 +1,9 @@
 const { expect } = require('@jest/globals');
-const CrawlingManager = require('../../src/crawlers/crawling-manager');
-const BrowserController = require('../../src/controllers/browser-controller');
-const IntelligentExtractor = require('../../src/extractors/intelligent-extractor');
-const CheckoutAutomation = require('../../src/checkout/checkout-automation');
-const Logger = require('../../src/utils/log-utils');
+const CrawlingManager = require('../../scripts/crawlers/crawling-manager');
+const BrowserController = require('../../scripts/controllers/browser-controller');
+const IntelligentExtractor = require('../../scripts/extractors/intelligent-extractor');
+const CheckoutAutomation = require('../../scripts/checkout/checkout-automation');
+const Logger = require('../../scripts/utils/logger');
 const config = require('../../config/default-config');
 const fs = require('fs');
 const path = require('path');
@@ -22,22 +22,23 @@ describe('크롤링 관리자 통합 테스트', () => {
       fs.mkdirSync(OUTPUT_DIR, { recursive: true });
     }
     
+    const testConfig = config.test || {};
     // 로깅 레벨 설정
-    Logger.setLevel(config.test.logLevel || 'error');
+    Logger.setLevel(testConfig.logLevel || 'error');
     
     // 크롤링 관리자 인스턴스 생성
     crawlingManager = new CrawlingManager({
       browserOptions: {
         headless: true,
-        ...config.test.browserOptions
+        ...(testConfig.browserOptions || {})
       },
       extractorOptions: {
         llmProvider: 'gemini-mock', // 테스트용 모의 LLM
-        ...config.test.extractorOptions
+        ...(testConfig.extractorOptions || {})
       },
       checkoutOptions: {
         dataDir: OUTPUT_DIR,
-        ...config.test.checkoutOptions
+        ...(testConfig.checkoutOptions || {})
       },
       maxRetries: 2,
       maxConcurrency: 2
