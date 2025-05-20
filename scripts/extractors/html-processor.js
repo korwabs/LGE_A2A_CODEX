@@ -522,5 +522,3 @@ class HtmlProcessor {
 }
 
 module.exports = HtmlProcessor;
-</function_content>
-</invoke>

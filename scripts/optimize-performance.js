@@ -12,7 +12,18 @@ const BrowserController = require('../src/controllers/browser-controller');
 const IntelligentExtractor = require('../src/extractors/intelligent-extractor');
 const CrawlingManager = require('../src/crawlers/crawling-manager');
 const Logger = require('../src/utils/log-utils');
-const config = require('../config/default-config');
+
+const config = require('./config/default-config');
+// 통합 테스트 기본 설정
+const DEFAULT_TEST_CONFIG = {
+  logLevel: "info",
+  browserOptions: {},
+  extractorOptions: {},
+  crawlingManagerOptions: {}
+};
+
+config.test = { ...DEFAULT_TEST_CONFIG, ...(config.test || {}) };
+
 
 // 최적화 결과 저장 경로
 const OPTIMIZATION_RESULTS_PATH = path.join(__dirname, '../logs/optimization-results.json');
