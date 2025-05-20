@@ -14,7 +14,10 @@ class ProductRecommendationAgent extends A2ABaseAgent {
   constructor(router, searchService, sessionService) {
     super('productRecommendationAgent', router);
     this.searchService = searchService;
-    this.sessionService = sessionService;
+    this.sessionService = sessionService || {
+      getSession: async () => ({}),
+      updateSession: async () => {}
+    };
     this.setupMessageHandlers();
   }
   
@@ -24,25 +27,28 @@ class ProductRecommendationAgent extends A2ABaseAgent {
   setupMessageHandlers() {
     // 제품 추천 요청 처리
     this.registerMessageHandler('getRecommendation', async (message) => {
-      const { sessionId, userQuery, filters, language = 'pt-BR' } = message.payload;
-      
+      const { sessionId, userId, userQuery, filters, language = 'pt-BR' } = message.payload;
+      const idKey = sessionId || userId;
+
       try {
-        this.logger.info(`제품 추천 요청 처리: ${sessionId}, 쿼리: "${userQuery}"`);
-        
-        // 세션 정보 가져오기
-        const session = await this.sessionService.getSession(sessionId);
-        if (!session) {
-          throw new Error(`세션을 찾을 수 없음: ${sessionId}`);
-        }
-        
-        // 사용자 선호도 및 행동 데이터 가져오기
-        const preferences = session.preferences || {};
+        this.logger.info(`제품 추천 요청 처리: ${idKey}, 쿼리: "${userQuery}"`);
+
+        // 세션 정보 가져오기 (선택적)
+        const session = await this.sessionService.getSession(idKey);
+        const preferences = (session && session.preferences) ? session.preferences : {};
         
         // 검색 쿼리 구성
-        const searchQuery = await this.buildSearchQuery(userQuery, filters, preferences);
-        
+        const searchQuery = this.buildSearchQuery(userQuery, filters, preferences);
+
         // Algolia 검색
-        const searchResults = await this.searchService.searchProducts(searchQuery);
+        let searchResults;
+        if (typeof this.searchService.searchProducts === 'function') {
+          searchResults = await this.searchService.searchProducts(searchQuery.query, searchQuery);
+        } else if (typeof this.searchService.search === 'function') {
+          searchResults = await this.searchService.search(searchQuery);
+        } else {
+          throw new Error('검색 서비스가 search 메서드를 제공하지 않습니다.');
+        }
         
         // 검색 결과 후처리 및 최적 추천 도출
         const recommendations = this.processSearchResults(searchResults.hits);
@@ -56,14 +62,14 @@ class ProductRecommendationAgent extends A2ABaseAgent {
             
           return {
             success: true,
-            sessionId,
+            userId: idKey,
             response: noResultsResponse,
             recommendations: []
           };
         }
-        
+
         // 검색 결과를 세션에 저장 (최근 검색)
-        await this.sessionService.updateSession(sessionId, {
+        await this.sessionService.updateSession(idKey, {
           recentSearches: [
             ...(session.recentSearches || []),
             {
@@ -73,15 +79,15 @@ class ProductRecommendationAgent extends A2ABaseAgent {
             }
           ].slice(-5) // 최근 5개만 유지
         });
-        
+
         // 결과를 대화 에이전트에 반환
         const result = await this.sendMessage(
           'dialogAgent',
           'response',
           'recommendationResult',
-          { 
-            sessionId, 
-            recommendations, 
+          {
+            userId: idKey,
+            recommendations,
             userQuery,
             language
           }
@@ -89,7 +95,7 @@ class ProductRecommendationAgent extends A2ABaseAgent {
         
         return result;
       } catch (error) {
-        this.logger.error(`제품 추천 요청 처리 오류: ${sessionId}`, error);
+        this.logger.error(`제품 추천 요청 처리 오류: ${idKey}`, error);
         
         // 오류 처리 응답
         const errorResponse = (language === 'pt-BR')
@@ -98,7 +104,7 @@ class ProductRecommendationAgent extends A2ABaseAgent {
           
         return {
           success: false,
-          sessionId,
+          userId: idKey,
           response: errorResponse,
           error: error.message
         };
@@ -157,30 +163,31 @@ class ProductRecommendationAgent extends A2ABaseAgent {
    * @param {Object} preferences - 사용자 선호도
    * @returns {Promise<string>} 구성된 검색 쿼리
    */
-  async buildSearchQuery(userQuery, filters = {}, preferences = {}) {
+  buildSearchQuery(userQuery, filters = {}, preferences = {}) {
     // 자연어 쿼리 전처리
     const processedQuery = this._preprocessQuery(userQuery);
-    
-    // 필터와 선호도를 반영한 검색 옵션 구성
-    const searchOptions = {};
-    
-    // 필터 처리
-    if (filters) {
-      const filterString = this._buildFilterString(filters);
-      if (filterString) {
-        searchOptions.filters = filterString;
-      }
+
+    const searchOptions = {
+      query: processedQuery,
+      hitsPerPage: 10,
+      attributesToRetrieve: [
+        'id', 'name', 'price', 'description', 'imageUrl', 'features',
+        'stockStatus', 'rating', 'url', 'category'
+      ]
+    };
+
+    const filterString = this.translateFiltersToAlgolia(filters);
+    if (filterString) {
+      searchOptions.filters = filterString;
     }
-    
-    // 선호도 반영
+
     if (preferences.categories && preferences.categories.length > 0) {
-      // 선호도에 맞는 카테고리 가중치 부여
-      searchOptions.optionalFilters = preferences.categories.map(category => 
+      searchOptions.optionalFilters = preferences.categories.map(category =>
         `category:${category}<score=10>`
       );
     }
-    
-    return processedQuery;
+
+    return searchOptions;
   }
   
   /**
@@ -189,12 +196,18 @@ class ProductRecommendationAgent extends A2ABaseAgent {
    * @returns {Array} 처리된 추천 제품 배열
    */
   processSearchResults(searchResults) {
-    if (!searchResults || !Array.isArray(searchResults) || searchResults.length === 0) {
+    const hitsArray = Array.isArray(searchResults)
+      ? searchResults
+      : (searchResults && Array.isArray(searchResults.hits))
+        ? searchResults.hits
+        : [];
+
+    if (hitsArray.length === 0) {
       return [];
     }
-    
+
     // 결과 구조화 및 점수 계산
-    return searchResults.map(hit => ({
+    return hitsArray.map(hit => ({
       id: hit.objectID || hit.id,
       name: hit.name,
       description: hit.description,
@@ -208,7 +221,16 @@ class ProductRecommendationAgent extends A2ABaseAgent {
       relevanceScore: hit._score || 0
     }));
   }
-  
+
+  /**
+   * 테스트 용도를 위해 공개된 필터 변환 함수
+   * @param {Object} filters
+   * @returns {string} Algolia 필터 문자열
+   */
+  translateFiltersToAlgolia(filters) {
+    return this._buildFilterString(filters);
+  }
+
   /**
    * 사용자 쿼리 전처리
    * @param {string} query - 사용자 쿼리
@@ -236,6 +258,13 @@ class ProductRecommendationAgent extends A2ABaseAgent {
     
     if (filters.category) {
       filterParts.push(`category:${filters.category}`);
+    }
+
+    if (filters.categories && Array.isArray(filters.categories)) {
+      const catFilters = filters.categories.map(cat => `categories:'${cat}'`);
+      if (catFilters.length > 0) {
+        filterParts.push(`(${catFilters.join(' OR ')})`);
+      }
     }
     
     if (filters.priceRange) {
