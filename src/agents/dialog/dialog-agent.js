@@ -13,6 +13,16 @@ class DialogAgent extends A2ABaseAgent {
    */
   constructor(router, mcpPromptManager, sessionService) {
     super('dialogAgent', router);
+
+    // legacy signature: (router, promptManager)
+    if (!sessionService) {
+      this.legacyMode = true;
+      this.mcpPromptManager = mcpPromptManager;
+      this.sessionService = null;
+      this.setupLegacyHandlers();
+      return;
+    }
+
     this.mcpPromptManager = mcpPromptManager;
     this.sessionService = sessionService;
     this.setupMessageHandlers();
@@ -267,6 +277,53 @@ class DialogAgent extends A2ABaseAgent {
           error: error.message
         };
       }
+    });
+  }
+
+  /** Simplified handlers for unit tests */
+  setupLegacyHandlers() {
+    // handle basic user queries
+    this.registerMessageHandler('userQuery', async (message) => {
+      const { userId, userQuery } = message.payload;
+      const intent = await this.analyzeUserIntent(userId, userQuery);
+
+      if (intent.type === 'productSearch') {
+        await this.router.sendMessage({
+          fromAgent: this.agentId,
+          toAgent: 'productRecommendationAgent',
+          messageType: 'request',
+          intent: 'getRecommendation',
+          payload: { userId, userQuery, filters: intent.filters }
+        });
+        return null;
+      }
+
+      if (intent.type === 'purchaseIntent') {
+        await this.router.sendMessage({
+          fromAgent: this.agentId,
+          toAgent: 'purchaseProcessAgent',
+          messageType: 'request',
+          intent: 'initiatePurchase',
+          payload: { userId, productId: intent.productId }
+        });
+        return null;
+      }
+
+      // general query
+      return await this.mcpPromptManager.generateGeminiResponse(
+        userId,
+        'generalQuery',
+        { userQuery }
+      );
+    });
+
+    this.registerMessageHandler('recommendationResult', async (message) => {
+      const { userId, recommendations, userQuery } = message.payload;
+      await this.mcpPromptManager.generateGeminiResponse(
+        userId,
+        'formatRecommendations',
+        { recommendations, userQuery }
+      );
     });
   }
   

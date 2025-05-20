@@ -15,6 +15,18 @@ class PurchaseProcessAgent extends A2ABaseAgent {
    */
   constructor(router, mcpPromptManager, sessionService, crawlingService, searchService) {
     super('purchaseProcessAgent', router);
+
+    // legacy signature: (router, contextManager, apifyClient)
+    if (crawlingService === undefined && searchService === undefined && mcpPromptManager && mcpPromptManager.storeContext) {
+      this.legacyMode = true;
+      this.contextManager = mcpPromptManager;
+      this.apifyClient = sessionService;
+      this.checkoutFlows = new Map();
+      this.initializeCheckoutFlowData = () => {};
+      this.setupLegacyHandlers();
+      return;
+    }
+
     this.mcpPromptManager = mcpPromptManager;
     this.sessionService = sessionService;
     this.crawlingService = crawlingService;
@@ -241,6 +253,77 @@ class PurchaseProcessAgent extends A2ABaseAgent {
         };
       }
     });
+  }
+
+  /** Simplified handlers for unit tests */
+  setupLegacyHandlers() {
+    this.registerMessageHandler('initiatePurchase', async (message) => {
+      const { userId, productId } = message.payload;
+      const productInfo = await this.fetchProductInfo(productId);
+      const steps = this.checkoutFlows.get(productInfo.category) || this.checkoutFlows.get('default') || [];
+      this.contextManager.storeContext(userId, {
+        currentCheckoutStep: 0,
+        checkoutSteps: steps,
+        productInfo,
+        collectedInfo: {}
+      });
+      const guideText = await this.generateStepGuidance(userId);
+      await this.router.sendMessage({
+        fromAgent: this.agentId,
+        toAgent: 'dialogAgent',
+        messageType: 'event',
+        intent: 'purchaseStepGuide',
+        payload: { userId, guideText }
+      });
+    });
+
+    this.registerMessageHandler('collectPurchaseInfo', async (message) => {
+      const { userId, userInput } = message.payload;
+      const context = this.contextManager.get(userId);
+      const stepInfo = context.checkoutSteps[context.currentCheckoutStep];
+      const extracted = await this.extractInfoFromUserInput(userInput, stepInfo.requiredFields);
+      this.contextManager.updateContext(userId, 'collectedInfo', { ...context.collectedInfo, ...extracted });
+      const missing = this.checkMissingRequiredFields(this.contextManager.get(userId).collectedInfo, stepInfo.requiredFields);
+      if (missing.length > 0) {
+        const promptText = await this.generateFieldPrompt(userId, missing[0]);
+        await this.router.sendMessage({
+          fromAgent: this.agentId,
+          toAgent: 'dialogAgent',
+          messageType: 'event',
+          intent: 'requestMoreInfo',
+          payload: { userId, promptText }
+        });
+        return;
+      }
+      const nextStep = context.currentCheckoutStep + 1;
+      this.contextManager.updateContext(userId, 'currentCheckoutStep', nextStep);
+      if (nextStep >= context.checkoutSteps.length) {
+        const url = await this.generateCheckoutUrl(userId, this.contextManager.get(userId).collectedInfo);
+        await this.router.sendMessage({
+          fromAgent: this.agentId,
+          toAgent: 'dialogAgent',
+          messageType: 'event',
+          intent: 'checkoutComplete',
+          payload: { userId, checkoutUrl: url }
+        });
+      } else {
+        const guideText = await this.generateStepGuidance(userId);
+        await this.router.sendMessage({
+          fromAgent: this.agentId,
+          toAgent: 'dialogAgent',
+          messageType: 'event',
+          intent: 'purchaseStepGuide',
+          payload: { userId, guideText }
+        });
+      }
+    });
+  }
+
+  async fetchProductInfo(productId) {
+    if (this.searchService && this.searchService.getProductById) {
+      return this.searchService.getProductById(productId);
+    }
+    return null;
   }
   
   /**

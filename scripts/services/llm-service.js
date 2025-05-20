@@ -86,6 +86,11 @@ class LlmService {
           logger.error('Failed to initialize Anthropic client. Make sure the Anthropic package is installed:', error);
           throw new Error('Anthropic package not available. Install with: npm install @anthropic-ai/sdk');
         }
+      } else if (this.provider === 'gemini-mock') {
+        this.client = {
+          async generateContent() { return '{"name":"Mock","price":100}'; },
+          messages: { async create() { return { content: [{ text: '{"name":"Mock","price":100}' }] }; } }
+        };
       } else {
         throw new Error(`Unsupported LLM provider: ${this.provider}`);
       }
@@ -125,6 +130,8 @@ class LlmService {
           response = await this._generateWithOpenAI(prompt, options);
         } else if (this.provider === 'anthropic') {
           response = await this._generateWithAnthropic(prompt, options);
+        } else if (this.provider === 'gemini-mock') {
+          response = '{"name":"Mock","price":100}';
         } else {
           throw new Error(`Unsupported LLM provider: ${this.provider}`);
         }
@@ -280,15 +287,16 @@ class LlmService {
     
     // 레이트 제한 체크
     const rateLimit = this.rateLimit[this.provider];
-    const now = Date.now();
-    const recentRequests = this.requestQueue.filter(
-      request => now - request.timestamp < rateLimit.perSeconds * 1000
-    );
-    
-    if (recentRequests.length >= rateLimit.maxRequests) {
-      // 레이트 제한 초과, 대기
-      const waitTime = (rateLimit.perSeconds * 1000) - (now - recentRequests[0].timestamp);
-      await delay(waitTime);
+    if (rateLimit) {
+      const now = Date.now();
+      const recentRequests = this.requestQueue.filter(
+        request => now - request.timestamp < rateLimit.perSeconds * 1000
+      );
+
+      if (recentRequests.length >= rateLimit.maxRequests) {
+        const waitTime = (rateLimit.perSeconds * 1000) - (now - recentRequests[0].timestamp);
+        await delay(waitTime);
+      }
     }
     
     // 다음 요청 처리
@@ -302,7 +310,8 @@ class LlmService {
     }
     
     // 연속 처리 지연 (API 부하 방지)
-    await delay(100);
+    const wait = this.provider === 'gemini-mock' ? 0 : 100;
+    await delay(wait);
     
     // 다음 요청 처리
     this.processQueue();

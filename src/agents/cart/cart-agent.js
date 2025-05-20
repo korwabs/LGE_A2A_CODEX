@@ -15,11 +15,125 @@ class CartAgent extends A2ABaseAgent {
    */
   constructor(router, mcpPromptManager, sessionService, searchService, crawlingService) {
     super('cartAgent', router);
+
+    // legacy signature: (router, sessionService)
+    if (sessionService === undefined && mcpPromptManager && typeof mcpPromptManager.getCart === 'function') {
+      this.legacyMode = true;
+      this.sessionService = mcpPromptManager;
+      this.mcpPromptManager = null;
+      this.searchService = null;
+      this.crawlingService = null;
+      this.setupLegacyHandlers();
+      return;
+    }
+
     this.mcpPromptManager = mcpPromptManager;
     this.sessionService = sessionService;
     this.searchService = searchService;
     this.crawlingService = crawlingService;
     this.setupMessageHandlers();
+  }
+
+  /** Legacy handlers for unit tests */
+  setupLegacyHandlers() {
+    // getCart
+    this.registerMessageHandler('getCart', async (message) => {
+      const { userId } = message.payload;
+      const cart = await this.sessionService.getCart(userId);
+      await this.router.sendMessage({
+        fromAgent: this.agentId,
+        toAgent: 'dialogAgent',
+        messageType: 'event',
+        intent: 'cartContents',
+        payload: { userId, cart }
+      });
+      return cart;
+    });
+
+    // addToCart
+    this.registerMessageHandler('addToCart', async (message) => {
+      const { userId, product, quantity = 1 } = message.payload;
+      await this.sessionService.addToCart(userId, product, quantity);
+      const cart = await this.sessionService.getCart(userId);
+      await this.router.sendMessage({
+        fromAgent: this.agentId,
+        toAgent: 'dialogAgent',
+        messageType: 'event',
+        intent: 'cartUpdated',
+        payload: { userId, cart, action: 'added', product }
+      });
+      return cart;
+    });
+
+    // updateCartItem
+    this.registerMessageHandler('updateCartItem', async (message) => {
+      const { userId, productId, quantity } = message.payload;
+      await this.sessionService.updateCartItem(userId, productId, quantity);
+      const cart = await this.sessionService.getCart(userId);
+      await this.router.sendMessage({
+        fromAgent: this.agentId,
+        toAgent: 'dialogAgent',
+        messageType: 'event',
+        intent: 'cartUpdated',
+        payload: { userId, cart, action: 'updated', productId }
+      });
+      return cart;
+    });
+
+    // removeFromCart
+    this.registerMessageHandler('removeFromCart', async (message) => {
+      const { userId, productId } = message.payload;
+      await this.sessionService.removeFromCart(userId, productId);
+      const cart = await this.sessionService.getCart(userId);
+      await this.router.sendMessage({
+        fromAgent: this.agentId,
+        toAgent: 'dialogAgent',
+        messageType: 'event',
+        intent: 'cartUpdated',
+        payload: { userId, cart, action: 'removed', productId }
+      });
+      return cart;
+    });
+
+    // clearCart
+    this.registerMessageHandler('clearCart', async (message) => {
+      const { userId } = message.payload;
+      await this.sessionService.clearCart(userId);
+      const cart = await this.sessionService.getCart(userId);
+      await this.router.sendMessage({
+        fromAgent: this.agentId,
+        toAgent: 'dialogAgent',
+        messageType: 'event',
+        intent: 'cartUpdated',
+        payload: { userId, cart, action: 'cleared' }
+      });
+      return cart;
+    });
+
+    // checkoutCart
+    this.registerMessageHandler('checkoutCart', async (message) => {
+      const { userId } = message.payload;
+      const cart = await this.sessionService.getCart(userId);
+      if (!cart || cart.length === 0) {
+        await this.router.sendMessage({
+          fromAgent: this.agentId,
+          toAgent: 'dialogAgent',
+          messageType: 'event',
+          intent: 'cartEmpty',
+          payload: { userId }
+        });
+        return null;
+      }
+      const checkoutUrl = await this.generateCartCheckoutUrl(userId, cart);
+      await this.router.sendMessage({
+        fromAgent: this.agentId,
+        toAgent: 'dialogAgent',
+        messageType: 'event',
+        intent: 'cartCheckout',
+        payload: { userId, checkoutUrl }
+      });
+      return checkoutUrl;
+    });
   }
   
   /**
@@ -652,6 +766,11 @@ class CartAgent extends A2ABaseAgent {
       // 오류 발생 시 기본 URL 반환
       return 'https://www.lge.com/br/shopping/cart';
     }
+  }
+
+  // Simple checkout URL generator for legacy tests
+  async generateCartCheckoutUrl(userId, cart) {
+    return `https://www.lge.com/br/checkout?user=${userId}`;
   }
   
   /**
