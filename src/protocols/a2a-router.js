@@ -6,7 +6,8 @@ class A2ARouter {
   constructor() {
     this.agents = new Map();
     this.messageQueue = [];
-    this.logger = console; // 나중에 더 좋은 로깅 시스템으로 교체 가능
+    this.logger = console; // 기본 로거
+    this.logLevel = 'info';
   }
 
   /**
@@ -29,7 +30,7 @@ class A2ARouter {
     const requiredFields = ['messageId', 'fromAgent', 'toAgent', 'messageType', 'intent', 'payload'];
     for (const field of requiredFields) {
       if (!message[field]) {
-        throw new Error(`메시지 유효성 검증 실패: ${field} 필드가 없습니다.`);
+        throw new Error('Invalid message format');
       }
     }
   }
@@ -39,8 +40,14 @@ class A2ARouter {
    * @param {Object} message - 로깅할 메시지
    */
   logMessage(message) {
-    this.logger.info(`메시지: ${message.messageId} - 전송 [${message.fromAgent} -> ${message.toAgent}] (${message.intent})`);
-    this.logger.debug('메시지 내용:', message);
+    const logStr = `message ${message.messageId}: ${message.fromAgent} -> ${message.toAgent} (${message.intent})`;
+    if (this.logLevel === 'debug') {
+      console.log(logStr);
+      console.log('payload', message);
+    } else {
+      this.logger.info(`메시지: ${message.messageId} - 전송 [${message.fromAgent} -> ${message.toAgent}] (${message.intent})`);
+      this.logger.debug('메시지 내용:', message);
+    }
   }
 
   /**
@@ -51,7 +58,7 @@ class A2ARouter {
    */
   async sendMessage(message) {
     if (!this.agents.has(message.toAgent)) {
-      throw new Error(`에이전트 ${message.toAgent}가 등록되지 않았습니다.`);
+      throw new Error(`Agent ${message.toAgent} not registered`);
     }
     
     // 메시지 유효성 검증

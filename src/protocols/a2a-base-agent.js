@@ -41,7 +41,7 @@ class A2ABaseAgent {
     this.logger.info(`에이전트 ${this.agentId}: '${message.intent}' 메시지 처리 시작`);
     
     if (!this.messageHandlers.has(message.intent)) {
-      throw new Error(`에이전트 ${this.agentId}: '${message.intent}' 의도를 처리할 핸들러가 없습니다.`);
+      throw new Error(`No handler registered for intent: ${message.intent}`);
     }
     
     const handler = this.messageHandlers.get(message.intent);
