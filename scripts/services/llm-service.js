@@ -25,6 +25,10 @@ class LlmService {
    */
   constructor(options = {}) {
     this.provider = options.provider || config.llm.provider;
+    if (this.provider === 'gemini') {
+      // Gemini는 Vertex AI 기반이므로 google 제공자로 취급
+      this.provider = 'google';
+    }
     this.model = options.model || config.llm.model;
     this.credentials = options.credentials || config.llm.credentials;
     this.useCache = options.useCache !== false;

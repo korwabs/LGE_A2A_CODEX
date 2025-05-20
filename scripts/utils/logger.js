@@ -50,4 +50,14 @@ if (process.env.NODE_ENV !== 'production') {
   logger.level = 'debug';
 }
 
+function setLevel(level) {
+  logger.level = level;
+}
+
+function addFileTransport(filePath) {
+  logger.add(new winston.transports.File({ filename: filePath }));
+}
+
 module.exports = logger;
+module.exports.setLevel = setLevel;
+module.exports.addFileTransport = addFileTransport;

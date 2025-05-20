@@ -15,8 +15,23 @@ const DialogAgent = require('../src/agents/dialog/dialog-agent');
 const ProductRecommendationAgent = require('../src/agents/product-recommendation/product-recommendation-agent');
 const CartAgent = require('../src/agents/cart/cart-agent');
 const PurchaseProcessAgent = require('../src/agents/purchase-process/purchase-process-agent');
-const Logger = require('../scripts/utils/logger');
-const config = require('../config/default-config');
+const Logger = require('./utils/logger');
+const config = require('./config/default-config');
+// 통합 테스트 기본 설정
+const DEFAULT_TEST_CONFIG = {
+  logLevel: "info",
+  browserOptions: {},
+  extractorOptions: {},
+  checkoutOptions: {},
+  crawlingManagerOptions: {},
+  dialogAgentOptions: {},
+  productRecommendationAgentOptions: {},
+  cartAgentOptions: {},
+  purchaseProcessAgentOptions: {}
+};
+
+config.test = { ...DEFAULT_TEST_CONFIG, ...(config.test || {}) };
+
 const fs = require('fs');
 const path = require('path');
 
